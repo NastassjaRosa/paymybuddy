@@ -30,7 +30,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
 
         // Conversion en UserDetails Spring
         return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail()) // ou user.getUsername(), selon ta logique
+                .username(user.getEmail()) // ou user.getUsername(),
                 .password(user.getPassword()) // hash bcrypt
                 .roles("USER") // tu pourras plus tard ajouter ROLE_ADMIN etc.
                 .build();
