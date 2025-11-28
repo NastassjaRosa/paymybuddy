@@ -2,6 +2,9 @@ package com.github.nastassjarosa.paymybuddy.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "`user`")
 public class User {
@@ -33,4 +36,29 @@ public class User {
     public void setEmail(String email) { this.email = email; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public List<User> getConnections() {
+        return connections;
+    }
+
+    public void setConnections(List<User> connections) {
+        this.connections = connections;
+    }
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_connection",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_budy")
+    )
+    private List<User> connections = new ArrayList<>();
+
+
+    public void addConnection(User other) {
+        this.connections.add(other);
+    }
+
+
+
 }
