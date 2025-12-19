@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final UserService userService;
     public AuthController(UserService userService){ this.userService = userService; }
-
+//test git connection
     public static record RegisterRequest(String username, String email, String password) {}
 
     @PostMapping("/register")
