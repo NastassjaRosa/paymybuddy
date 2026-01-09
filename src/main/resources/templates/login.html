@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>Pay My Buddy - Login</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-<h2>Login</h2>
+<div class="login-page">
+    <div class="login-card">
+        <div class="login-content">
 
-<form method="post" action="/login">
-    <label>Email :</label>
-    <input type="text" name="username" />
+            <div class="brand-badge">Pay My Buddy</div>
 
-    <label>Password :</label>
-    <input type="password" name="password" />
+            <form class="login-form" method="post" action="/login">
+                <input class="login-input" type="text" names name="username" placeholder="Mail">
+                <input class="login-input" type="password" name="password" placeholder="Mot de passe">
+                <button class="login-btn" type="submit">Se connecter</button>
+            </form>
 
-    <button type="submit">Connexion</button>
-</form>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -1,0 +1,15 @@
+<nav th:fragment="navbar(active)">
+    <div class="nav">
+        <div class="brand">Pay My Buddy</div>
+
+        <div class="links">
+            <a th:href="@{/transfer}" th:classappend="${active}=='transfer' ? 'active' : ''">Transfer</a>
+            <a th:href="@{/profile}" th:classappend="${active}=='profile' ? 'active' : ''">Profil</a>
+            <a th:href="@{/relation}" th:classappend="${active}=='relation' ? 'active' : ''">Ajouter relation</a>
+
+            <form th:action="@{/logout}" method="post" class="logout">
+                <button type="submit" class="linklike">Se déconnecter</button>
+            </form>
+        </div>
+    </div>
+</nav>

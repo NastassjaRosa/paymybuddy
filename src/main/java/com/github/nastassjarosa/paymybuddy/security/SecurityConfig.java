@@ -48,22 +48,18 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/actuator/health",
+                        .requestMatchers(
+                                "/api/auth/**",
                                 "/login",
-                                "/login/**",
-                                "/login.html",
                                 "/css/**",
                                 "/js/**",
-                                "/images/**").permitAll()
-                        .requestMatchers("/login").permitAll()
+                                "/images/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                )
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
+                        .loginPage("/login")          // page GET /login
+                        .loginProcessingUrl("/login") // POST /login (géré par Spring Security)
                         .defaultSuccessUrl("/home", true)
                         .failureUrl("/login?error")
                         .permitAll()
@@ -72,10 +68,10 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
-                )
+                );
 
-                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
+
 
 }
