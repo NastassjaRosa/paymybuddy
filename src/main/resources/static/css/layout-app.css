@@ -1,0 +1,42 @@
+/* Layout commun (header) pour Transfer / Connections / Profile */
+.app-layout {
+    min-height: 100vh;
+    background: #fff;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.app-header {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+}
+
+.app-brand {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+}
+
+.app-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.app-nav a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.app-nav a.active {
+    color: #207FEE;
+    font-weight: 600;
+}
+
+.app-main {
+    padding: 80px;
+}

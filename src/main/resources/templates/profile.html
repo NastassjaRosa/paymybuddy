@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profil - Pay My Buddy</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__brand">Pay My Buddy</div>
+  <nav class="topbar__nav">
+    <a class="topbar__link" th:href="@{/transfer}">Transférer</a>
+    <a class="topbar__link is-active" th:href="@{/profile}">Profil</a>
+    <a class="topbar__link" th:href="@{/connections}">Ajouter relation</a>
+    <a class="topbar__link" th:href="@{/logout}">Se déconnecter</a>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="profile">
+
+    <form class="profile__form" th:action="@{/profile}" method="post">
+
+      <div class="profile__row">
+        <label class="profile__label">Username</label>
+        <input class="input" type="text" name="username"
+               th:value="${user.username}" required />
+      </div>
+
+      <div class="profile__row">
+        <label class="profile__label">Mail</label>
+        <input class="input" type="email" name="email"
+               th:value="${user.email}" required />
+      </div>
+
+      <div class="profile__row">
+        <label class="profile__label">Mot de passe</label>
+        <input class="input" type="password" name="password"
+               placeholder="Nouveau mot de passe" />
+      </div>
+
+      <button class="btn btn--orange profile__btn" type="submit">
+        Modifier
+      </button>
+
+    </form>
+
+  </section>
+</main>
+
+</body>
+</html>

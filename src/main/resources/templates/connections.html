@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter relation</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet" th:href="@{/css/layout-app.css}">
+    <link rel="stylesheet" th:href="@{/css/connections.css}">
+</head>
+<body class="app-layout">
+
+<header class="topbar">
+    <div class="topbar__brand">Pay My Buddy</div>
+    <nav class="topbar__nav">
+        <a class="topbar__link" th:href="@{/transfer}">Transférer</a>
+        <a class="topbar__link" th:href="@{/profile}">Profil</a>
+        <a class="topbar__link is-active" th:href="@{/connections}">Ajouter relation</a>
+        <a class="topbar__link" th:href="@{/logout}">Se déconnecter</a>
+    </nav>
+</header>
+
+
+<main class="app-main">
+    <section class="connections-wrap">
+        <form class="connections-form" id="addRelationForm">
+            <div class="connections-field">
+                <label class="connections-label" for="buddyEmail">Chercher une relation</label>
+                <input class="connections-input"
+                       id="buddyEmail"
+                       name="buddyEmail"
+                       type="email"
+                       placeholder="Saisir une adresse mail"
+                       required>
+            </div>
+
+            <button class="connections-btn" type="submit">Ajouter</button>
+        </form>
+
+        <p class="connections-msg" id="formMsg"></p>
+    </section>
+</main>
+
+<script>
+    document.getElementById('addRelationForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const buddyEmail = document.getElementById('buddyEmail').value.trim();
+        const msg = document.getElementById('formMsg');
+        msg.textContent = '';
+
+        try {
+            const res = await fetch('/api/connections', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ buddyEmail })
+            });
+
+            if (!res.ok) {
+                const txt = await res.text();
+                throw new Error(txt || 'Erreur');
+            }
+
+            msg.textContent = 'Relation ajoutée';
+        } catch (err) {
+            msg.textContent = 'Erreur: ' + err.message;
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header class="topbar" th:fragment="topbar(active)">
+  <div class="topbar__brand">Pay My Buddy</div>
+
+  <nav class="topbar__nav">
+    <a class="topbar__link"
+       th:href="@{/transfer}"
+       th:classappend="${active == 'transfer'} ? ' is-active' : ''">
+      Transférer
+    </a>
+
+    <a class="topbar__link"
+       th:href="@{/profile}"
+       th:classappend="${active == 'profile'} ? ' is-active' : ''">
+      Profil
+    </a>
+
+    <a class="topbar__link"
+       th:href="@{/connections}"
+       th:classappend="${active == 'connections'} ? ' is-active' : ''">
+      Ajouter relation
+    </a>
+
+    <a class="topbar__link" th:href="@{/logout}">Se déconnecter</a>
+  </nav>
+</header>
+
+</body>
+</html>

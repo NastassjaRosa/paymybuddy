@@ -1,0 +1,61 @@
+/* Page Ajouter relation (contenu central, layout header) */
+.connections-wrap{
+    display: flex;
+    justify-content: center;
+    margin-top: 120px; /* ajuste si besoin */
+}
+
+.connections-form{
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.connections-field{
+    width: 484px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.connections-label{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 150%;
+    color: #000;
+}
+
+.connections-input{
+    height: 54px;
+    padding: 12px 16px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+    font-size: 20px;
+    outline: none;
+}
+
+.connections-input::placeholder{
+    color: #828282;
+    font-weight: 500;
+}
+
+.connections-btn{
+    height: 62px;
+    padding: 24px 32px;
+    border: none;
+    border-radius: 8px;
+    background: #F69F1D;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 150%;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.05);
+    cursor: pointer;
+}
+
+.connections-msg{
+    margin-top: 16px;
+    text-align: center;
+    font-size: 16px;
+}

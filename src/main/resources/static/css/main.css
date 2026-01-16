@@ -1,0 +1,149 @@
+/* Base */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: #fff;
+    color: #000;
+}
+
+/* Top bar */
+.topbar{
+    height: 96px;
+    padding: 0 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.topbar__brand{
+    font-weight: 600;
+    font-size: 20px;
+}
+.topbar__nav{
+    display: flex;
+    gap: 28px;
+}
+.topbar__link{
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+.topbar__link.is-active{
+    color: #207FEE;
+    font-weight: 700;
+}
+
+/* Page layout */
+.page{
+    padding: 0 80px 96px;
+}
+.transfer{
+    max-width: 1311px;
+    margin: 0 auto;
+}
+
+/* Form row */
+.transfer__form{
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 360px 360px 180px 120px;
+    gap: 24px;
+    align-items: center;
+}
+
+/* Inputs */
+.input{
+    height: 60px;
+    padding: 12px 16px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    font-size: 18px;
+}
+.input--amount{
+    text-align: left;
+}
+
+/* Buttons */
+.btn{
+    height: 60px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.btn--primary{
+    background: #207FEE;
+    color: #fff;
+}
+
+/* Card + table */
+.card{
+    margin-top: 56px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    padding: 0;
+    overflow: hidden;
+}
+.card__title{
+    padding: 18px 24px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.table__head, .table__row{
+    display: grid;
+    grid-template-columns: 1fr 2fr 140px;
+    gap: 24px;
+    align-items: center;
+    padding: 14px 24px;
+}
+.table__head{
+    font-size: 24px;
+    font-weight: 600;
+}
+.table__row{
+    border-top: 1px solid #E0E0E0;
+    font-size: 20px;
+}
+.table__cell--amt, .table__col--amt{
+    text-align: right;
+}
+/* ===== Profil ===== */
+
+.profile{
+    max-width: 520px;
+    margin: 80px auto 0;
+}
+
+.profile__form{
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.profile__row{
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.profile__label{
+    width: 140px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.profile__btn{
+    align-self: flex-start;
+    margin-left: 140px;
+}
+
+.btn--orange{
+    background: #F69F1D;
+    color: #fff;
+}
