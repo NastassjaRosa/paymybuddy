@@ -17,7 +17,13 @@
             <input class="input" type="password" name="password" placeholder="Mot de passe" required>
 
             <button class="btn btn-blue" type="submit">S’inscrire</button>
+
+
         </form>
+
+        <p th:if="${error}" th:text="${error}"></p>
+        <p th:if="${success}" th:text="${success}"></p>
+
 
     </div>
 </div>

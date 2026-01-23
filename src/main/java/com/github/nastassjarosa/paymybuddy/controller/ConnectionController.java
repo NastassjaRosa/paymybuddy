@@ -3,6 +3,8 @@ package com.github.nastassjarosa.paymybuddy.controller;
 import com.github.nastassjarosa.paymybuddy.model.User;
 import com.github.nastassjarosa.paymybuddy.service.UserConnectionService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+
 
 import java.util.List;
 
@@ -16,12 +18,14 @@ public class ConnectionController {
         this.service = service;
     }
 
-    public record AddConnectionRequest(String userEmail, String buddyEmail) {}
+    public record AddConnectionRequest(String buddyEmail) {}
 
     @PostMapping
-    public void add(@RequestBody AddConnectionRequest req) {
-        service.addConnection(req.userEmail(), req.buddyEmail());
+    public void add(@RequestBody AddConnectionRequest req, Authentication authentication) {
+        String userEmail = authentication.getName(); // chez toi = email
+        service.addConnection(userEmail, req.buddyEmail());
     }
+
 
     @GetMapping("/{email}")
     public List<User> list(@PathVariable String email) {

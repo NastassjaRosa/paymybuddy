@@ -62,7 +62,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")          // page GET /login
                         .loginProcessingUrl("/login") // POST /login (géré par Spring Security)
-                        .defaultSuccessUrl("/home", true)
+                        .defaultSuccessUrl("/transfer", true)
                         .failureUrl("/login?error")
                         .permitAll()
                 )
