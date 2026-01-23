@@ -15,7 +15,8 @@ public class TransactionController {
         this.service = service;
     }
 
-    public record SendRequest(String senderEmail, String receiverEmail, double amount, String description) {}
+    public record SendRequest(String senderEmail, String receiverEmail, double amount, String description) {
+    }
 
     @PostMapping("/send")
     public ResponseEntity<?> send(@RequestBody SendRequest req) {

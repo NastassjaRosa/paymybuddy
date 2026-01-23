@@ -18,11 +18,12 @@ public class ConnectionController {
         this.service = service;
     }
 
-    public record AddConnectionRequest(String buddyEmail) {}
+    public record AddConnectionRequest(String buddyEmail) {
+    }
 
     @PostMapping
     public void add(@RequestBody AddConnectionRequest req, Authentication authentication) {
-        String userEmail = authentication.getName(); // chez toi = email
+        String userEmail = authentication.getName();
         service.addConnection(userEmail, req.buddyEmail());
     }
 

@@ -24,7 +24,8 @@ public class Transaction {
     @Column(length = 255)
     private String description;
 
-    public Transaction() {}
+    public Transaction() {
+    }
 
     public Transaction(User sender, User receiver, double amount, String description) {
         this.sender = sender;

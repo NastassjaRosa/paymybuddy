@@ -55,7 +55,7 @@
             const res = await fetch('/api/connections', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ buddyEmail })
+                body: JSON.stringify({buddyEmail})
             });
 
             if (!res.ok) {

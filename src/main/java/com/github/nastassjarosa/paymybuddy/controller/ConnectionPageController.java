@@ -8,7 +8,7 @@ public class ConnectionPageController {
 
     @GetMapping("/connections")
     public String connectionsPage() {
-        return "connections"; // templates/connections.html
+        return "connections";
     }
 }
 

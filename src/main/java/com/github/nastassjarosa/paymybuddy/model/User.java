@@ -41,10 +41,6 @@ public class User {
         return connections;
     }
 
-    public void setConnections(List<User> connections) {
-        this.connections = connections;
-    }
-
 
     @ManyToMany
     @JoinTable(
@@ -53,12 +49,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "user_budy")
     )
     private List<User> connections = new ArrayList<>();
-
-
-    public void addConnection(User other) {
-        this.connections.add(other);
-    }
-
 
 
 }

@@ -18,11 +18,11 @@ public class ProfilePageController {
 
     @GetMapping("/profile")
     public String profile(Authentication authentication, Model model) {
-        String email = authentication.getName(); // => email grâce à DatabaseUserDetailsService
+        String email = authentication.getName();
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
 
         model.addAttribute("user", user);
-        return "profile"; // templates/profile.html
+        return "profile";
     }
 }

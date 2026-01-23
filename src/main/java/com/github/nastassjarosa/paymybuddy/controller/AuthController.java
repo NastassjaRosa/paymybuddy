@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
     private final UserService userService;
-    public AuthController(UserService userService){ this.userService = userService; }
 
-    public static record RegisterRequest(String username, String email, String password) {}
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
+
+    public static record RegisterRequest(String username, String email, String password) {
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {

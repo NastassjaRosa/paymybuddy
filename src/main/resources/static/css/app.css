@@ -8,7 +8,10 @@
     --blue: #1e66ff;
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -16,7 +19,11 @@ body {
     background: var(--bg);
 }
 
-.page { max-width: 960px; margin: 0 auto; padding: 24px; }
+.page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px;
+}
 
 .nav {
     display: flex;
@@ -26,8 +33,16 @@ body {
     border-bottom: 1px solid var(--border);
 }
 
-.brand { font-weight: 700; }
-.links { display: flex; gap: 16px; align-items: center; }
+.brand {
+    font-weight: 700;
+}
+
+.links {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
 .links a, .linklike {
     color: var(--text);
     text-decoration: none;
@@ -37,7 +52,10 @@ body {
     font: inherit;
     cursor: pointer;
 }
-.links a.active { font-weight: 700; }
+
+.links a.active {
+    font-weight: 700;
+}
 
 .card {
     width: 320px;
@@ -61,6 +79,7 @@ body {
     width: 100%;
     margin: 10px 0;
 }
+
 .field label {
     display: block;
     text-align: left;
@@ -68,6 +87,7 @@ body {
     color: var(--muted);
     margin-bottom: 4px;
 }
+
 .field input, .field select {
     width: 100%;
     padding: 8px 10px;
@@ -83,17 +103,30 @@ body {
     cursor: pointer;
     font-weight: 600;
 }
-.btn-blue { background: var(--blue); color: #fff; }
-.btn-orange { background: var(--primary); color: #fff; }
+
+.btn-blue {
+    background: var(--blue);
+    color: #fff;
+}
+
+.btn-orange {
+    background: var(--primary);
+    color: #fff;
+}
 
 .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 18px;
 }
+
 .table th, .table td {
     border-bottom: 1px solid var(--border);
     padding: 10px;
     text-align: left;
 }
-.table th { color: var(--muted); font-weight: 600; }
+
+.table th {
+    color: var(--muted);
+    font-weight: 600;
+}

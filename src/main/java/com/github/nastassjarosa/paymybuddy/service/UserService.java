@@ -11,7 +11,7 @@ public class UserService {
     private final UserRepository repo;
     private final PasswordEncoder encoder;
 
-    public UserService(UserRepository repo, PasswordEncoder encoder){
+    public UserService(UserRepository repo, PasswordEncoder encoder) {
         this.repo = repo;
         this.encoder = encoder;
     }
@@ -21,7 +21,6 @@ public class UserService {
         if (repo.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email already used");
         }
-        // Hachage obligatoire AVANT save
         String hash = encoder.encode(rawPassword);
         User u = new User(username, email, hash);
         return repo.save(u);

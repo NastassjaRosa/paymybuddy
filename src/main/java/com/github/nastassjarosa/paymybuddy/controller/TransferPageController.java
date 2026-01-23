@@ -1,6 +1,6 @@
 package com.github.nastassjarosa.paymybuddy.controller;
 
-import com.github.nastassjarosa.paymybuddy.model.Transaction;
+
 import com.github.nastassjarosa.paymybuddy.service.TransactionService;
 import com.github.nastassjarosa.paymybuddy.service.UserConnectionService;
 import com.github.nastassjarosa.paymybuddy.service.UserService;
@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
+
 
 @Controller
 public class TransferPageController {

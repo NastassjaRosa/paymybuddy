@@ -1,4 +1,3 @@
-/* reset léger */
 * {
     box-sizing: border-box;
     font-family: Inter, Arial, sans-serif;
@@ -9,7 +8,6 @@ body {
     background: #ffffff;
 }
 
-/* page centrée */
 .page {
     min-height: 100vh;
     display: flex;
@@ -17,21 +15,20 @@ body {
     align-items: center;
 }
 
-/* carte */
 .card {
     width: 500px;
     height: 688px;
     border: 1px solid #000000;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 70px 0; /* espace haut/bas */
+    padding: 70px 0;
     display: flex;
     flex-direction: column;
-    align-items: center;  /* centre horizontalement */
+    align-items: center;
     justify-content: flex-start;
     gap: 28px;
 }
 
-/* titre */
+
 .brand {
     text-align: center;
     font-size: 32px;
@@ -39,18 +36,18 @@ body {
     margin-bottom: 40px;
 }
 
-/* formulaire */
+
 .form {
-    width: 295px;          /* maquette */
+    width: 295px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    align-items: center;   /* centre inputs + bouton */
+    align-items: center;
 }
 
 .input {
-    width: 295px;          /* maquette */
-    height: 60px;          /* maquette */
+    width: 295px;
+    height: 60px;
     padding: 12px 16px;
     font-size: 20px;
     font-weight: 700;
@@ -64,7 +61,7 @@ body {
     color: #828282;
 }
 
-/* boutons */
+
 .btn {
     height: 64px;
     border-radius: 8px;
@@ -82,26 +79,31 @@ body {
 .btn-blue {
     background: #207FEE;
     color: #FFFFFF;
-    width: 159px; /* maquette */
+    width: 159px;
 }
 
 
 .btn-orange {
     background: #F69F1D;
     color: #FFFFFF;
-    width: 214px; /* maquette */
+    width: 214px;
 }
 
-/* messages */
+
 .msg {
     text-align: center;
     font-weight: 600;
 }
 
-.msg.ok { color: #2e7d32; }
-.msg.err { color: #c62828; }
+.msg.ok {
+    color: #2e7d32;
+}
 
-/* lien */
+.msg.err {
+    color: #c62828;
+}
+
+
 .link {
     text-align: center;
     text-decoration: none;
