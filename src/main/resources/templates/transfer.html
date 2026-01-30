@@ -26,9 +26,10 @@
                 <option value="" selected disabled>Sélectionner une relation</option>
                 <option th:each="r : ${relations}"
                         th:value="${r.email}"
-                        th:text="${r.username}">Relation
+                        th:text="${r.username}">
                 </option>
             </select>
+
 
             <input class="input" type="text" name="description" placeholder="Description" maxlength="255"/>
 
@@ -50,19 +51,23 @@
 
                 <div class="table__body">
                     <div class="table__row" th:each="tx : ${history}">
-                        <div class="table__cell table__cell--rel"
-                             th:text="${tx.receiver != null ? tx.receiver.username : '—'}">Laure-Anne
+                        <div class="table__cell table__cell--rel">
+                            <span th:text="${tx.sender.email == currentEmail ? tx.receiver.username : tx.sender.username}"></span>
+                            <span class="tx-direction"
+                                  th:text="${tx.sender.email == currentEmail ? '(envoyé)' : '(reçu)'}"></span>
                         </div>
 
                         <div class="table__cell table__cell--desc"
-                             th:text="${tx.description != null ? tx.description : ''}">Restaurant
+                             th:text="${tx.description != null ? tx.description : ''}">
                         </div>
 
                         <div class="table__cell table__cell--amt"
-                             th:text="${tx.amount} + '€'">10€
+                             th:text="${#numbers.formatDecimal(tx.amount, 1, 2)} + ' €'">
                         </div>
                     </div>
                 </div>
+            </div>
+
             </div>
         </section>
 

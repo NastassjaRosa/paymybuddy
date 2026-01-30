@@ -49,6 +49,8 @@ public class TransactionService {
     public List<Transaction> getUserHistory(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        return transactionRepository.findBySender(user);
+
+        return transactionRepository.findBySenderOrReceiver(user, user);
     }
+
 }

@@ -26,10 +26,12 @@ public class TransferPageController {
 
     @GetMapping("/transfer")
     public String transferPage(Model model, Principal principal) {
-        String senderEmail = principal.getName();
+        String currentEmail = principal.getName();
 
-        model.addAttribute("relations", userConnectionService.listConnections(senderEmail));
-        model.addAttribute("history", transactionService.getUserHistory(senderEmail));
+
+        model.addAttribute("currentEmail", currentEmail);
+        model.addAttribute("relations", userConnectionService.listConnections(currentEmail));
+        model.addAttribute("history", transactionService.getUserHistory(currentEmail));
         return "transfer";
     }
 
