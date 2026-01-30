@@ -21,6 +21,7 @@
     <section class="transfer">
 
         <form class="transfer__form" th:action="@{/transfer}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <select class="input" name="receiverEmail" required>
                 <option value="" selected disabled>Sélectionner une relation</option>
                 <option th:each="r : ${relations}"

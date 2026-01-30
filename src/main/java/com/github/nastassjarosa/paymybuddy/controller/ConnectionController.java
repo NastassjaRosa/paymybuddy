@@ -27,7 +27,6 @@ public class ConnectionController {
         service.addConnection(userEmail, req.buddyEmail());
     }
 
-
     @GetMapping("/{email}")
     public List<User> list(@PathVariable String email) {
         return service.listConnections(email);

@@ -2,6 +2,8 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Ajouter relation</title>
 
     <link rel="stylesheet" th:href="@{/css/main.css}">
@@ -18,15 +20,22 @@
         <a class="topbar__link" th:href="@{/transfer}">Transférer</a>
         <a class="topbar__link" th:href="@{/profile}">Profil</a>
         <a class="topbar__link is-active" th:href="@{/connections}">Ajouter relation</a>
-        <a class="topbar__link" th:href="@{/logout}">Se déconnecter</a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="topbar__link"
+                    style="background:none;border:none;cursor:pointer;padding:0;">
+                Se déconnecter
+            </button>
+        </form>
+
     </nav>
 </header>
 
 
 <main class="app-main">
     <section class="connections-wrap">
-        <form class="connections-form" id="addRelationForm">
-            <div class="connections-field">
+        <form class="connections-form" id="addRelationForm" th:action="@{/api/connections}" method="post">
+        <div class="connections-field">
                 <label class="connections-label" for="buddyEmail">Chercher une relation</label>
                 <input class="connections-input"
                        id="buddyEmail"
@@ -52,11 +61,18 @@
         msg.textContent = '';
 
         try {
+            const token = document.querySelector('meta[name="_csrf"]').content;
+            const headerName = document.querySelector('meta[name="_csrf_header"]').content;
+
             const res = await fetch('/api/connections', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({buddyEmail})
+                headers: {
+                    'Content-Type': 'application/json',
+                    [headerName]: token
+                },
+                body: JSON.stringify({ buddyEmail })
             });
+
 
             if (!res.ok) {
                 const txt = await res.text();
