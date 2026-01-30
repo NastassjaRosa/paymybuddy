@@ -154,9 +154,9 @@ class TransactionServiceTest {
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
 
         Transaction t1 = new Transaction(sender, receiver, 5.0, "A");
-        Transaction t2 = new Transaction(sender, receiver, 8.0, "B");
+        Transaction t2 = new Transaction(receiver, sender, 8.0, "B");
 
-        when(transactionRepository.findBySender(sender)).thenReturn(List.of(t1, t2));
+        when(transactionRepository.findBySenderOrReceiver(sender, sender)).thenReturn(List.of(t1, t2));
 
         List<Transaction> result = transactionService.getUserHistory("sender@mail.com");
 
@@ -164,6 +164,36 @@ class TransactionServiceTest {
         assertEquals("A", result.get(0).getDescription());
         assertEquals("B", result.get(1).getDescription());
 
-        verify(transactionRepository).findBySender(sender);
+        verify(transactionRepository).findBySenderOrReceiver(sender, sender);
     }
+    @Test
+    void sendMoney_shouldNotCheckConnection_whenReceiverNotFound() {
+        when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
+        when(userRepository.findByEmail("receiver@mail.com")).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> transactionService.sendMoney("sender@mail.com", "receiver@mail.com", 10, "desc"));
+
+        verifyNoInteractions(connectionService);
+        verify(transactionRepository, never()).save(any());
+    }
+
+    @Test
+    void sendMoney_shouldSaveTransaction_whenDescriptionIsNull() {
+        when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
+        when(userRepository.findByEmail("receiver@mail.com")).thenReturn(Optional.of(receiver));
+        when(connectionService.areConnected(sender, receiver)).thenReturn(true);
+
+        when(transactionRepository.save(any(Transaction.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Transaction result = transactionService.sendMoney("sender@mail.com", "receiver@mail.com", 10, null);
+
+        assertNotNull(result);
+        assertNull(result.getDescription());
+        verify(transactionRepository).save(any(Transaction.class));
+    }
+
+
+
 }
