@@ -96,4 +96,15 @@ body {
     filter: brightness(0.97);
 }
 
+.login-register {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.login-register a {
+    display: inline-block;
+    margin-top: 4px;
+}
+
+
 
