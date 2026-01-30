@@ -27,9 +27,34 @@ public class UserService {
     }
 
     @Transactional
-    public User changePassword(Integer userId, String newRawPassword) {
-        User u = repo.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        u.setPassword(encoder.encode(newRawPassword));
-        return repo.save(u);
+    public void changePassword(Integer userId, String newRawPassword) {
+        User user = repo.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        user.setPassword(encoder.encode(newRawPassword));
+        repo.save(user);
     }
+
+
+    @Transactional
+    public boolean updateProfile(String currentEmail, String newUsername, String newEmail) {
+
+        User user = repo.findByEmail(currentEmail)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        user.setUsername(newUsername);
+
+        boolean emailChanged = !newEmail.equalsIgnoreCase(user.getEmail());
+        if (emailChanged) {
+            repo.findByEmail(newEmail)
+                    .ifPresent(u -> { throw new IllegalArgumentException("Email already used"); });
+            user.setEmail(newEmail);
+        }
+
+        repo.save(user);
+        return emailChanged;
+    }
+
+
+
 }
