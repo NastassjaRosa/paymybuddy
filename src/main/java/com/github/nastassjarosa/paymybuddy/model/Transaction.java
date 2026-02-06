@@ -1,7 +1,10 @@
 package com.github.nastassjarosa.paymybuddy.model;
 
 import jakarta.persistence.*;
-
+/**
+ * Entité persistée représentant un transfert d'argent entre deux utilisateurs.
+ * Stocke l'expéditeur, le destinataire, le montant et une description.
+ */
 @Entity
 @Table(name = "transaction")
 public class Transaction {
@@ -10,23 +13,33 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // Expéditeur du transfert.
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;
-
+    // Destinataire du transfert.
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
-
+    // Montant du transfert.
     @Column(nullable = false)
     private double amount;
-
+    // Libellé saisi par l'utilisateur.
     @Column(length = 255)
     private String description;
-
+    /**
+     * Constructeur requis par JPA.
+     */
     public Transaction() {
     }
-
+    /**
+     * Construit une transaction prête à être persistée.
+     *
+     * @param sender expéditeur
+     * @param receiver destinataire
+     * @param amount montant
+     * @param description description
+     */
     public Transaction(User sender, User receiver, double amount, String description) {
         this.sender = sender;
         this.receiver = receiver;

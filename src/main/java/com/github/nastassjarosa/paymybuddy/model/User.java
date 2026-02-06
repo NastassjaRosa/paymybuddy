@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Entité persistée représentant un utilisateur de l'application.
+ * Stocke l'identité (username, email) et le mot de passe sous forme de hash.
+ */
 @Entity
 @Table(name = "`user`")
 public class User {
@@ -17,12 +20,20 @@ public class User {
 
     @Column(length = 150, nullable = false, unique = true)
     private String email;
-
+    // Mot de passe stocké sous forme de hash.
     @Column(length = 255, nullable = false)
     private String password; // stocke le hash bcrypt
-
+    /**
+     * Constructeur requis par JPA.
+     */
     public User() {}
-
+    /**
+     * Construit un utilisateur.
+     *
+     * @param username nom affiché
+     * @param email email utilisé comme identifiant
+     * @param password hash du mot de passe
+     */
     public User(String username, String email, String password) {
         this.username = username; this.email = email; this.password = password;
     }
@@ -37,11 +48,17 @@ public class User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
+
+    /**
+     * Retourne la liste des relations de l'utilisateur.
+     *
+     * @return relations de type User
+     */
     public List<User> getConnections() {
         return connections;
     }
 
-
+    // Relations bidirectionnelles stockées dans la table de jointure.
     @ManyToMany
     @JoinTable(
             name = "user_connection",
