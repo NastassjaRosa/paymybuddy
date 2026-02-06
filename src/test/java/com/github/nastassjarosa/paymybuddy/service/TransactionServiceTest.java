@@ -172,6 +172,7 @@ class TransactionServiceTest {
 
         verify(transactionRepository).findBySenderOrReceiver(sender, sender);
     }
+
     @Test
     void sendMoney_shouldNotCheckConnection_whenReceiverNotFound() {
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));

@@ -3,9 +3,8 @@ package com.github.nastassjarosa.paymybuddy.controller;
 import com.github.nastassjarosa.paymybuddy.model.User;
 import com.github.nastassjarosa.paymybuddy.service.UserConnectionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
-
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +19,7 @@ public class ConnectionController {
     // La logique métier des relations est centralisée dans le service.
     // Le service applique les règles et effectue l'enregistrement en base.
     private final UserConnectionService service;
+
     /**
      * Construit le contrôleur avec le service de relations.
      *
@@ -28,19 +28,13 @@ public class ConnectionController {
     public ConnectionController(UserConnectionService service) {
         this.service = service;
     }
-    /**
-     * Objet de requête pour ajouter une relation.
-     *
-     * @param buddyEmail email de l'utilisateur à ajouter en relation
-     */
-    public record AddConnectionRequest(String buddyEmail) {
-    }
+
     /**
      * Ajoute une relation pour l'utilisateur connecté.
-     *
+     * <p>
      * L'utilisateur source est identifié via l'authentification.
      *
-     * @param req requête contenant l'email du buddy
+     * @param req            requête contenant l'email du buddy
      * @param authentication contexte de sécurité de l'utilisateur connecté
      */
     @PostMapping
@@ -50,6 +44,7 @@ public class ConnectionController {
         // Ajout de la relation via le service : contrôles métier + persistance.
         service.addConnection(userEmail, req.buddyEmail());
     }
+
     /**
      * Retourne la liste des relations associées à un email.
      *
@@ -61,9 +56,10 @@ public class ConnectionController {
         // Lecture des relations via le service
         return service.listConnections(email);
     }
+
     /**
      * Intercepte les erreurs de type IllegalArgumentException levées par la couche service.
-     *
+     * <p>
      * Cette méthode transforme une erreur métier en réponse HTTP exploitable par le client.
      * Elle évite la propagation d'une erreur interne et la génération d'une réponse 500.
      *
@@ -75,14 +71,24 @@ public class ConnectionController {
         // Conversion d'une erreur métier en réponse HTTP
         return ResponseEntity.badRequest().body(new ApiError(ex.getMessage()));
     }
+
+    /**
+     * Objet de requête pour ajouter une relation.
+     *
+     * @param buddyEmail email de l'utilisateur à ajouter en relation
+     */
+    public record AddConnectionRequest(String buddyEmail) {
+    }
+
     /**
      * Objet de réponse représentant une erreur fonctionnelle.
-     *
+     * <p>
      * Contient uniquement le message destiné à l'affichage côté client.
      *
      * @param message description de l'erreur
      */
-    public record ApiError(String message) {}
+    public record ApiError(String message) {
+    }
 
 }
 

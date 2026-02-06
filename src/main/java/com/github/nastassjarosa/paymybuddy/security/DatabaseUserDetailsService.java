@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 /**
  * Service Spring Security chargé de charger un utilisateur pour l'authentification.
  * Recherche un utilisateur par email ou par nom d'utilisateur et construit un UserDetails.
@@ -19,6 +20,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
     public DatabaseUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     /**
      * Charge un utilisateur à partir d'un identifiant fourni par le formulaire de connexion.
      *

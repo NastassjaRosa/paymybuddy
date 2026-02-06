@@ -4,6 +4,7 @@ import com.github.nastassjarosa.paymybuddy.model.Transaction;
 import com.github.nastassjarosa.paymybuddy.service.TransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 /**
  * Contrôleur REST responsable des opérations liées aux transactions.
  * Expose l'envoi d'argent et la consultation de l'historique.
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class TransactionController {
 
     private final TransactionService service;
+
     /**
      * Construit le contrôleur avec le service de transactions.
      *
@@ -22,19 +24,10 @@ public class TransactionController {
 
         this.service = service;
     }
-    /**
-     * Objet de requête pour initier un transfert.
-     *
-     * @param senderEmail email de l'expéditeur
-     * @param receiverEmail email du destinataire
-     * @param amount montant à transférer
-     * @param description description associée
-     */
-    public record SendRequest(String senderEmail, String receiverEmail, double amount, String description) {
-    }
+
     /**
      * Effectue un transfert d'argent entre deux utilisateurs.
-     *
+     * <p>
      * Les validations métier et l'enregistrement de la transaction sont réalisés par la couche service.
      *
      * @param req requête de transfert
@@ -46,6 +39,7 @@ public class TransactionController {
         Transaction tx = service.sendMoney(req.senderEmail(), req.receiverEmail(), req.amount(), req.description());
         return ResponseEntity.ok("Transaction completed. ID=" + tx.getId());
     }
+
     /**
      * Retourne l'historique des transactions d'un utilisateur.
      *
@@ -56,5 +50,16 @@ public class TransactionController {
     public ResponseEntity<?> history(@PathVariable String email) {
         // Lecture via le service : centralisation de l'accès aux données et des règles de filtre.
         return ResponseEntity.ok(service.getUserHistory(email));
+    }
+
+    /**
+     * Objet de requête pour initier un transfert.
+     *
+     * @param senderEmail   email de l'expéditeur
+     * @param receiverEmail email du destinataire
+     * @param amount        montant à transférer
+     * @param description   description associée
+     */
+    public record SendRequest(String senderEmail, String receiverEmail, double amount, String description) {
     }
 }

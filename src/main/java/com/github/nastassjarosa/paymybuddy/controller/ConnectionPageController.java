@@ -2,6 +2,7 @@ package com.github.nastassjarosa.paymybuddy.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
 /**
  * Contrôleur MVC responsable de l'affichage de la page "connections".
  */

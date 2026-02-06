@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Entité persistée représentant un utilisateur de l'application.
  * Stocke l'identité (username, email) et le mot de passe sous forme de hash.
@@ -23,31 +24,66 @@ public class User {
     // Mot de passe stocké sous forme de hash.
     @Column(length = 255, nullable = false)
     private String password; // stocke le hash bcrypt
+    // Relations bidirectionnelles stockées dans la table de jointure.
+    @ManyToMany
+    @JoinTable(
+            name = "user_connection",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_budy")
+    )
+    private List<User> connections = new ArrayList<>();
+
     /**
      * Constructeur requis par JPA.
      */
-    public User() {}
+    public User() {
+    }
+
     /**
      * Construit un utilisateur.
      *
      * @param username nom affiché
-     * @param email email utilisé comme identifiant
+     * @param email    email utilisé comme identifiant
      * @param password hash du mot de passe
      */
     public User(String username, String email, String password) {
-        this.username = username; this.email = email; this.password = password;
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     // getters / setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     /**
      * Retourne la liste des relations de l'utilisateur.
@@ -57,15 +93,6 @@ public class User {
     public List<User> getConnections() {
         return connections;
     }
-
-    // Relations bidirectionnelles stockées dans la table de jointure.
-    @ManyToMany
-    @JoinTable(
-            name = "user_connection",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_budy")
-    )
-    private List<User> connections = new ArrayList<>();
 
 
 }

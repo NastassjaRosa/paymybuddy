@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BillingServiceLogger implements BillingService {
     private static final Logger log = LoggerFactory.getLogger(BillingServiceLogger.class);
+
     /**
      * Implémentation de BillingService qui écrit une trace structurée dans les logs applicatifs.
      */

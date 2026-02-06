@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 /**
  * Repository JPA pour l'accès aux transactions.
  * Fournit des méthodes de lecture et des agrégations utilisées pour le calcul du solde.
@@ -18,6 +19,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     List<Transaction> findByReceiver(User receiver);
 
     List<Transaction> findBySenderOrReceiver(User sender, User receiver);
+
     /**
      * Calcule le total des montants reçus par un utilisateur.
      *
@@ -25,11 +27,12 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
      * @return somme des montants reçus
      */
     @org.springframework.data.jpa.repository.Query("""
-    SELECT COALESCE(SUM(t.amount), 0)
-    FROM Transaction t
-    WHERE t.receiver.id = :userId
-""")
+                SELECT COALESCE(SUM(t.amount), 0)
+                FROM Transaction t
+                WHERE t.receiver.id = :userId
+            """)
     double sumReceived(@org.springframework.data.repository.query.Param("userId") Integer userId);
+
     /**
      * Calcule le total des montants envoyés par un utilisateur.
      *
@@ -37,10 +40,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
      * @return somme des montants envoyés
      */
     @org.springframework.data.jpa.repository.Query("""
-    SELECT COALESCE(SUM(t.amount), 0)
-    FROM Transaction t
-    WHERE t.sender.id = :userId
-""")
+                SELECT COALESCE(SUM(t.amount), 0)
+                FROM Transaction t
+                WHERE t.sender.id = :userId
+            """)
     double sumSent(@org.springframework.data.repository.query.Param("userId") Integer userId);
 
 

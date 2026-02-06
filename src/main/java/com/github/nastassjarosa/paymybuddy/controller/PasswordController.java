@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 /**
  * Contrôleur MVC responsable du changement de mot de passe.
  * Affiche le formulaire et applique la modification via la couche service.
@@ -20,16 +21,18 @@ public class PasswordController {
 
     private final UserRepository userRepository;
     private final UserService userService;
+
     /**
      * Construit le contrôleur avec les dépendances nécessaires.
      *
      * @param userRepository accès aux utilisateurs
-     * @param userService service métier utilisateur
+     * @param userService    service métier utilisateur
      */
     public PasswordController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
         this.userService = userService;
     }
+
     /**
      * Affiche la page de changement de mot de passe.
      *
@@ -43,13 +46,13 @@ public class PasswordController {
 
     /**
      * Modifie le mot de passe de l'utilisateur connecté puis force une déconnexion.
-     *
+     * <p>
      * Le mot de passe est traité par la couche service avant d'être enregistré.
      * La déconnexion invalide la session en cours après modification.
      *
-     * @param auth utilisateur authentifié
+     * @param auth     utilisateur authentifié
      * @param password nouveau mot de passe
-     * @param request requête HTTP
+     * @param request  requête HTTP
      * @param response réponse HTTP
      * @return redirection vers la page de connexion
      */

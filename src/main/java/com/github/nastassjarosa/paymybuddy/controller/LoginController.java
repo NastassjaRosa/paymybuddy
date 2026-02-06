@@ -2,6 +2,7 @@ package com.github.nastassjarosa.paymybuddy.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
 /**
  * Contrôleur MVC responsable de l'affichage de la page de connexion.
  */
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LoginController {
     /**
      * Retourne la vue Thymeleaf de la page de connexion.
-     *
+     * <p>
      * L'authentification est gérée par Spring Security.
      *
      * @return nom du template

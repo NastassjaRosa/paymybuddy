@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 /**
  * Service métier responsable des transferts et du calcul de solde.
  * Valide les règles de transfert, enregistre la transaction et journalise l'opération.
@@ -33,22 +34,22 @@ public class TransactionService {
 
     /**
      * Effectue un transfert d'argent entre deux utilisateurs.
-     *
+     * <p>
      * Valide le montant, interdit l'auto-transfert, vérifie l'existence des utilisateurs,
      * vérifie la relation, contrôle le solde disponible, persiste la transaction et journalise l'opération.
      *
-     * @param senderEmail email de l'expéditeur
+     * @param senderEmail   email de l'expéditeur
      * @param receiverEmail email du destinataire
-     * @param amount montant du transfert
-     * @param description description associée
+     * @param amount        montant du transfert
+     * @param description   description associée
      * @return transaction persistée
      */
     @Transactional
     public Transaction sendMoney(String senderEmail, String receiverEmail, double amount, String description) {
-// Validation du montant.
+        // Validation du montant.
         if (amount <= 0)
             throw new IllegalArgumentException("Amount must be > 0");
-// Interdiction d'envoyer de l'argent à soi-même.
+        // Interdiction d'envoyer de l'argent à soi-même.
         if (senderEmail.equals(receiverEmail))
             throw new IllegalArgumentException("Cannot send money to yourself");
         // Chargement de l'expéditeur.
@@ -60,19 +61,20 @@ public class TransactionService {
         // Vérification de la relation entre les deux utilisateurs.
         if (!connectionService.areConnected(sender, receiver))
             throw new IllegalArgumentException("Users are not connected");
-// Construction de la transaction.
+        // Construction de la transaction.
         Transaction tx = new Transaction(sender, receiver, amount, description);
         // Contrôle du solde disponible de l'expéditeur avant enregistrement.
         double balance = getBalance(sender.getId());
         if (balance < amount) {
             throw new IllegalStateException("Insufficient balance");
         }
-// Persistance de la transaction.
+        // Persistance de la transaction.
         Transaction saved = transactionRepository.save(tx);
         billingService.logPayment(saved);
         return saved;
 
     }
+
     /**
      * Retourne l'historique des transactions envoyées et reçues par un utilisateur.
      *
@@ -82,12 +84,13 @@ public class TransactionService {
     public List<Transaction> getUserHistory(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-// Lecture des transactions où l'utilisateur est expéditeur ou destinataire.
+        // Lecture des transactions où l'utilisateur est expéditeur ou destinataire.
         return transactionRepository.findBySenderOrReceiver(user, user);
     }
+
     /**
      * Calcule le solde d'un utilisateur.
-     *
+     * <p>
      * Solde = total reçu - total envoyé.
      *
      * @param userId identifiant de l'utilisateur

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 /**
  * Contrôleur MVC responsable de l'inscription via formulaire.
  * Affiche la page d'inscription et crée le compte via la couche service.
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegisterController {
 
     private final UserService userService;
+
     /**
      * Construit le contrôleur avec le service d'utilisateurs.
      *
@@ -21,6 +23,7 @@ public class RegisterController {
     public RegisterController(UserService userService) {
         this.userService = userService;
     }
+
     /**
      * Affiche la page d'inscription.
      *
@@ -30,16 +33,16 @@ public class RegisterController {
     public String registerPage() {
         return "register";
     }
+
     /**
      * Crée un utilisateur à partir du formulaire d'inscription.
-     *
      * Le service applique les règles de création de compte et traite le mot de passe avant stockage.
      * Un message de statut est transmis via les attributs de redirection.
      *
      * @param username nom affiché
-     * @param email email utilisé comme identifiant
+     * @param email    email utilisé comme identifiant
      * @param password mot de passe saisi
-     * @param ra attributs de redirection
+     * @param ra       attributs de redirection
      * @return redirection vers login ou retour sur register
      */
     @PostMapping("/register")

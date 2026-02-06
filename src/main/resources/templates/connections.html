@@ -35,7 +35,7 @@
 <main class="app-main">
     <section class="connections-wrap">
         <form class="connections-form" id="addRelationForm" th:action="@{/api/connections}" method="post">
-        <div class="connections-field">
+            <div class="connections-field">
                 <label class="connections-label" for="buddyEmail">Chercher une relation</label>
                 <input class="connections-input"
                        id="buddyEmail"
@@ -70,7 +70,7 @@
                     'Content-Type': 'application/json',
                     [headerName]: token
                 },
-                body: JSON.stringify({ buddyEmail })
+                body: JSON.stringify({buddyEmail})
             });
 
 

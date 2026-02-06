@@ -23,6 +23,7 @@ public class SecurityConfig {
     public SecurityConfig(com.github.nastassjarosa.paymybuddy.security.DatabaseUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
+
     /**
      * Fournit l'encodeur de mot de passe utilisé pour l'inscription, le changement de mot de passe
      * et la comparaison lors de l'authentification.
@@ -34,6 +35,7 @@ public class SecurityConfig {
 
         return new BCryptPasswordEncoder();
     }
+
     /**
      * Fournit le provider d'authentification basé sur un UserDetailsService et un PasswordEncoder.
      *
@@ -48,6 +50,7 @@ public class SecurityConfig {
         prov.setPasswordEncoder(passwordEncoder());
         return prov;
     }
+
     /**
      * Définit les règles d'accès, la page de login, et le mécanisme de logout.
      *
@@ -58,7 +61,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-               // Déclare les routes publiques et protège le reste.
+                // Déclare les routes publiques et protège le reste.
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/auth/**",
