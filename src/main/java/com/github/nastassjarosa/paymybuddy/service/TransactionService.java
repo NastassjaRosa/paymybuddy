@@ -16,13 +16,18 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserConnectionService connectionService;
 
+    private final BillingService billingService;
+
     public TransactionService(UserRepository userRepository,
                               TransactionRepository transactionRepository,
-                              UserConnectionService connectionService) {
+                              UserConnectionService connectionService,
+                              BillingService billingService) {
         this.userRepository = userRepository;
         this.transactionRepository = transactionRepository;
         this.connectionService = connectionService;
+        this.billingService = billingService;
     }
+
 
     @Transactional
     public Transaction sendMoney(String senderEmail, String receiverEmail, double amount, String description) {
@@ -43,7 +48,15 @@ public class TransactionService {
             throw new IllegalArgumentException("Users are not connected");
 
         Transaction tx = new Transaction(sender, receiver, amount, description);
-        return transactionRepository.save(tx);
+        double balance = getBalance(sender.getId());
+        if (balance < amount) {
+            throw new IllegalStateException("Insufficient balance");
+        }
+
+        Transaction saved = transactionRepository.save(tx);
+        billingService.logPayment(saved);
+        return saved;
+
     }
 
     public List<Transaction> getUserHistory(String userEmail) {
@@ -52,5 +65,10 @@ public class TransactionService {
 
         return transactionRepository.findBySenderOrReceiver(user, user);
     }
+
+    public double getBalance(Integer userId) {
+        return transactionRepository.sumReceived(userId) - transactionRepository.sumSent(userId);
+    }
+
 
 }

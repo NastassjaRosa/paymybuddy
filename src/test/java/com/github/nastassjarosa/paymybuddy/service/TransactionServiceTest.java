@@ -34,6 +34,10 @@ class TransactionServiceTest {
     @InjectMocks
     private TransactionService transactionService;
 
+    @Mock
+    private BillingService billingService;
+
+
     private User sender;
     private User receiver;
 
@@ -112,6 +116,8 @@ class TransactionServiceTest {
     void sendMoney_shouldSaveTransaction_whenValid() {
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
         when(userRepository.findByEmail("receiver@mail.com")).thenReturn(Optional.of(receiver));
+        when(transactionRepository.sumReceived(sender.getId())).thenReturn(100.0);
+        when(transactionRepository.sumSent(sender.getId())).thenReturn(0.0);
         when(connectionService.areConnected(sender, receiver)).thenReturn(true);
 
         when(transactionRepository.save(any(Transaction.class)))
@@ -182,6 +188,8 @@ class TransactionServiceTest {
     void sendMoney_shouldSaveTransaction_whenDescriptionIsNull() {
         when(userRepository.findByEmail("sender@mail.com")).thenReturn(Optional.of(sender));
         when(userRepository.findByEmail("receiver@mail.com")).thenReturn(Optional.of(receiver));
+        when(transactionRepository.sumReceived(sender.getId())).thenReturn(100.0);
+        when(transactionRepository.sumSent(sender.getId())).thenReturn(0.0);
         when(connectionService.areConnected(sender, receiver)).thenReturn(true);
 
         when(transactionRepository.save(any(Transaction.class)))
@@ -194,6 +202,51 @@ class TransactionServiceTest {
         verify(transactionRepository).save(any(Transaction.class));
     }
 
+    @Test
+    void sendMoney_shouldFail_whenBalanceIsInsufficient() {
+        // given
+        User sender = new User("Alice", "alice@mail.com", "pwd");
+        sender.setId(1);
+
+        User receiver = new User("Bob", "bob@mail.com", "pwd");
+        receiver.setId(2);
+
+        when(userRepository.findByEmail("alice@mail.com")).thenReturn(Optional.of(sender));
+        when(userRepository.findByEmail("bob@mail.com")).thenReturn(Optional.of(receiver));
+        when(connectionService.areConnected(sender, receiver)).thenReturn(true);
+
+        when(transactionRepository.sumReceived(1)).thenReturn(10.0);
+        when(transactionRepository.sumSent(1)).thenReturn(9.5);
+
+        // when / then
+        assertThrows(IllegalStateException.class, () ->
+                transactionService.sendMoney("alice@mail.com", "bob@mail.com", 5.0, "test")
+        );
+    }
+
+    @Test
+    void sendMoney_shouldLogBillingOrder_whenTransactionIsSaved() {
+        // given
+        User sender = new User("Alice", "alice@mail.com", "pwd");
+        sender.setId(1);
+
+        User receiver = new User("Bob", "bob@mail.com", "pwd");
+        receiver.setId(2);
+
+        Transaction tx = new Transaction(sender, receiver, 5.0, "test");
+
+        when(userRepository.findByEmail(any())).thenReturn(Optional.of(sender), Optional.of(receiver));
+        when(connectionService.areConnected(sender, receiver)).thenReturn(true);
+        when(transactionRepository.sumReceived(1)).thenReturn(100.0);
+        when(transactionRepository.sumSent(1)).thenReturn(0.0);
+        when(transactionRepository.save(any(Transaction.class))).thenReturn(tx);
+
+        // when
+        transactionService.sendMoney("alice@mail.com", "bob@mail.com", 5.0, "test");
+
+        // then
+        verify(billingService).logPayment(any(Transaction.class));
+    }
 
 
 }

@@ -25,15 +25,27 @@ public class TransferPageController {
     }
 
     @GetMapping("/transfer")
-    public String transferPage(Model model, Principal principal) {
-        String currentEmail = principal.getName();
+    public String transferPage(Model model,
+                               Principal principal,
+                               @RequestParam(required = false) String error,
+                               @RequestParam(required = false) String success) {
 
+        String currentEmail = principal.getName();
 
         model.addAttribute("currentEmail", currentEmail);
         model.addAttribute("relations", userConnectionService.listConnections(currentEmail));
         model.addAttribute("history", transactionService.getUserHistory(currentEmail));
+
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
+        if (success != null) {
+            model.addAttribute("success", true);
+        }
+
         return "transfer";
     }
+
 
     @PostMapping("/transfer")
     public String doTransfer(@RequestParam String receiverEmail,
@@ -42,7 +54,13 @@ public class TransferPageController {
                              Principal principal) {
 
         String senderEmail = principal.getName();
-        transactionService.sendMoney(senderEmail, receiverEmail, amount, description);
-        return "redirect:/transfer";
+
+        try {
+            transactionService.sendMoney(senderEmail, receiverEmail, amount, description);
+            return "redirect:/transfer?success";
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            return "redirect:/transfer?error=" + java.net.URLEncoder.encode(e.getMessage(), java.nio.charset.StandardCharsets.UTF_8);
+        }
     }
+
 }

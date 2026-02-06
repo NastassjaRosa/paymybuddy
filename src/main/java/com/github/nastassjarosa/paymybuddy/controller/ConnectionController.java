@@ -2,11 +2,14 @@ package com.github.nastassjarosa.paymybuddy.controller;
 
 import com.github.nastassjarosa.paymybuddy.model.User;
 import com.github.nastassjarosa.paymybuddy.service.UserConnectionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
 
 import java.util.List;
+
+
 
 @RestController
 @RequestMapping("/api/connections")
@@ -31,5 +34,13 @@ public class ConnectionController {
     public List<User> list(@PathVariable String email) {
         return service.listConnections(email);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(new ApiError(ex.getMessage()));
+    }
+
+    public record ApiError(String message) {}
+
 }
 

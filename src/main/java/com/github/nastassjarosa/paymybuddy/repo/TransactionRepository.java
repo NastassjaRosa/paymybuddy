@@ -15,5 +15,21 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     List<Transaction> findByReceiver(User receiver);
 
     List<Transaction> findBySenderOrReceiver(User sender, User receiver);
+
+    @org.springframework.data.jpa.repository.Query("""
+    SELECT COALESCE(SUM(t.amount), 0)
+    FROM Transaction t
+    WHERE t.receiver.id = :userId
+""")
+    double sumReceived(@org.springframework.data.repository.query.Param("userId") Integer userId);
+
+    @org.springframework.data.jpa.repository.Query("""
+    SELECT COALESCE(SUM(t.amount), 0)
+    FROM Transaction t
+    WHERE t.sender.id = :userId
+""")
+    double sumSent(@org.springframework.data.repository.query.Param("userId") Integer userId);
+
+
 }
 
